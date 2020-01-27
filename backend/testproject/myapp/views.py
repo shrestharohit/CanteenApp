@@ -1,4 +1,5 @@
 from .serializers import *
+from rest_framework import serializers
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -60,13 +61,14 @@ class MenuView(generics.ListCreateAPIView):
     serializer_class = MenuSerializer
 
     def perform_create(self, serializer):
-        san = self.get_queryset()
-        if san.exists():
-            raise ValidationError('You have already made menu for that date')
+        queryset = Menu.objects.filter(date=self.request.data.get('date'))
+        if queryset.exists():
+            raise serializers.ValidationError('You have already made menu for that date')
         serializer.save()
 
 class OrderView(generics.ListCreateAPIView):
-    
+
+    queryset = Order.objects.all()
     serializer_class = OrderSerializer
     def create(self, request, *args, **kwargs):
         # print("sanee")
@@ -80,9 +82,9 @@ class OrderView(generics.ListCreateAPIView):
         # print("manee")
         # print(self.request.data.getlist("menu_item")[0])
        
-        queryset = Menu.objects.filter(date=self.request.data.getlist("date")[0], food_item=self.request.data.getlist("menu_item")[0])
+        queryset = Menu.objects.filter(date=self.request.data.get('date'), food_item=self.request.data.get('menu_item'))
         if not queryset.exists():
-            raise ValidationError('not available')
+            raise serializers.ValidationError('not available')
         serializer.save()
 
      
