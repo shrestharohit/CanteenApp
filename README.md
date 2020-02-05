@@ -1,17 +1,44 @@
 # CanteenManagementSystem
 Vue.Js and Django Rest Framework
 
-For backend (guide for beginners):
+<h2>BACKEND (PYTHON DJANGO REST FRAMEWORK)</h2>
+Setting up python environment:
 - Install Python3
 - Install pip
 - python3 -m pip install --user virtualenv
 - apt-get install python3-venv
 
-  //go to working directory with requirements.txt
-- python3 -m venv django // create virtual environment
-- source django/bin/activate //activate virtual environment
-- pip install -r requirements.txt // install requirements
+Setting up virtual Environment:
+- cd CanteenApp/backend
+- python3 -m venv django
+- source django/bin/activate
+
+Installing Requirements:
+- pip install -r requirements.txt 
 - pip freeze //to verify the requirements installed or not.
   
-  //go to directory with manage.py
-- python manage.py runserver // run server
+Run server:
+- python manage.py runserver
+
+For deleting database, delete db.sqlite file inside backend direcory, 
+- python manage.py migrate
+
+For creating superuser:
+- python manage.py createsuperuser
+
+For adding new user manually without django user, password requirements:
+- python manage.py shell
+- from django.contrib.auth.models import User
+- User.objects.create_user(username='abc', password='abc',first_name= 'abc',last_name='abc')
+
+
+
+<h2>RONTEND (VUE CLI3)</h2>
+Setting up environment:
+- Install npm
+
+Installing Packages and Dependencies:
+- npm install
+
+Run server:
+- npm run serve
